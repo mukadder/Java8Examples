@@ -3,20 +3,20 @@
  */
 public class Inner {
 
-    private Ki ki;
+    private Source source;
     private Strength strength;
 
-    public Inner(Ki ki, Strength strength) {
-        this.ki = ki;
+    public Inner(Source source, Strength strength) {
+        this.source = source;
         this.strength = strength;
     }
 
-    public Ki getKi() {
-        return ki;
+    public Source getSource() {
+        return source;
     }
 
-    public void setKi(Ki ki) {
-        this.ki = ki;
+    public void setSource(Source source) {
+        this.source = source;
     }
 
     public Strength getStrength() {
