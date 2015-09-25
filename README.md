@@ -1,3 +1,9 @@
-<h1>Optional and Stream Use Example</h1>
+<h1>Java 8 Examples</h1>
 
-This is an use example for Java 8 Optional and Stream.
+This is an use example for Java 8 new features:
+
+<ul>
+<li>Lambda</li>
+<li>Optional</li>
+<li>Stream</li>
+</ul>
