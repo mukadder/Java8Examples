@@ -1,14 +1,18 @@
+package com.example;
+
+import com.example.ironman.Iron;
+import com.example.ironman.IronMan;
+
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
-import java.util.stream.Stream;
 
 /**
  * Created by MHP on 10/08/2015.
  */
-public class StreamMain {
+public class StreamExample {
 
     private static final int EMPTY_ENERGY = 0;
 
@@ -56,7 +60,7 @@ public class StreamMain {
         IronMan tonyStark = new IronMan(Iron.ADAMANTIUM);
 
         // Infinite streams
-        Stream<IronMan> newArmy = Stream.iterate(tonyStark, tonyStark::addPower);
+        java.util.stream.Stream<IronMan> newArmy = java.util.stream.Stream.iterate(tonyStark, tonyStark::addPower);
         // Limit the stream (it could be infinite)
         newArmy.limit(5)
                 .mapToInt(IronMan::getEnergy)
@@ -66,8 +70,8 @@ public class StreamMain {
 
 
         // of, peek, findFirst (findAny)
-        Stream.of(tonyStark, tonyStark, najor)
-                .peek(StreamMain::increasePower)
+        java.util.stream.Stream.of(tonyStark, tonyStark, najor)
+                .peek(StreamExample::increasePower)
                 .findFirst();
 
 

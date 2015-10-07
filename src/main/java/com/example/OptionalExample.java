@@ -1,7 +1,10 @@
-import java.util.Objects;
-import java.util.Optional;
+package com.example;
 
-public class OptionalMain {
+import com.example.ironman.*;
+
+import java.util.Objects;
+
+public class OptionalExample {
 
     public static void main(String[] args) {
         IronMan tonyStark = new IronMan(Iron.ADAMANTIUM);
@@ -18,12 +21,12 @@ public class OptionalMain {
         }
 
         // isPresent
-        if (!Optional.of(najor).isPresent()) {
-            System.out.println("Fake　");
+        if (!java.util.Optional.of(najor).isPresent()) {
+            System.out.println("Fake");
         }
 
         // of lambada
-        Optional<IronMan> tonyStarkOptional = Optional.of(tonyStark);
+        java.util.Optional<IronMan> tonyStarkOptional = java.util.Optional.of(tonyStark);
         tonyStarkOptional.map(ironMan -> ironMan.getInner())
                 .map(inner -> inner.getSource())
                 .map(source -> source.getPower())
@@ -36,50 +39,50 @@ public class OptionalMain {
                 .ifPresent(System.out::println);
 
         //ofNullable
-        Optional.ofNullable(null).orElse("This is nothing");
+        java.util.Optional.ofNullable(null).orElse("This is nothing");
 
         // map
-        Optional.of(tonyStark)
+        java.util.Optional.of(tonyStark)
                 .map(IronMan::getInner)
                 .map(Inner::getSource)
                 .map(Source::getPower)
                 .orElse("No more");
 
         // flatMap(::Optional)
-        Optional.of(warMachine)
+        java.util.Optional.of(warMachine)
                 .map(IronMan::getInner)
                 .map(Inner::getStrength)
                 .flatMap(Strength::getLevel)
                 .ifPresent(System.out::println);
 
         // orElse
-        Optional.of(warMachine)
+        java.util.Optional.of(warMachine)
                 .map(IronMan::getInner)
                 .map(Inner::getSource)
                 .map(Source::getPower)
-                .orElse("No inner: YOU ARE A FAKE　　");
+                .orElse("No inner: YOU ARE A FAKE");
 
         // ofNullable
-        Optional.ofNullable(najor)
+        java.util.Optional.ofNullable(najor)
                 .map(IronMan::getInner)
                 .map(Inner::getSource)
                 .map(Source::getPower)
-                .orElse("No inner: YOU ARE A FAKE　　");
+                .orElse("No inner: YOU ARE A FAKE");
 
         // ifPresent: lambda, functional programming
-        Optional.of(tonyStark)
+        java.util.Optional.of(tonyStark)
                 .map(IronMan::getInner)
                 .map(Inner::getSource)
                 .map(Source::getPower)
                 .ifPresent(System.out::println);
 
         // orElseGet
-        Optional.ofNullable(najor)
+        java.util.Optional.ofNullable(najor)
                 .map(IronMan::getInner)
                 .orElseGet(tonyStark::getInner);
 
         // Throws a NullPointerException
-        Objects.requireNonNull(najor, "Ironman cannot be null　");
+        Objects.requireNonNull(najor, "Ironman cannot be null");
 
     }
 }
