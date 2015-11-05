@@ -1,9 +1,11 @@
 package com.example.ironman;
 
+import com.example.superhero.Avenger;
+
 /**
  * Created by MHP on 22/07/2015.
  */
-public class IronMan {
+public class IronMan implements Avenger {
     private Inner inner;
 
     public IronMan() {
