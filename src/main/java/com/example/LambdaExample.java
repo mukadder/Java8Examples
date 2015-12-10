@@ -1,6 +1,7 @@
 package com.example;
 
-import com.example.ironman.Iron;
+import com.example.annotations.Fly;
+import com.example.annotations.Schedule;
 import com.example.ironman.IronMan;
 import com.example.superhero.Avenger;
 import com.example.superhero.Avengers;
@@ -18,47 +19,31 @@ import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
 /**
+ * This class is just an example of how to use some of the Java 8 new features.
  * Created by najor on 7/10/15.
  */
 public class LambdaExample {
 
+    @Schedule(dayOfMonth = "last")
+    @Schedule(dayOfWeek="Fri", hour="23")
+    static void doPeriodicCleanup() { }
+
+    static void  processStringList(List<String> stringList) {
+        // process stringList
+    }
+
     public static void main(String[] args) {
+        methodParameterReflection();
+        typeAnnotations();
+        typeInference();
+        defaultAndStaticInterfaceMethods();
+        lambdaListener();
+        Avengers avengers = lambdaCustomInterface();
+        lambdaMethodReference(avengers);
+        lambdaFunctionInterfaces(avengers);
+    }
 
-        // Listener in GUI
-        TextField field = new TextField();
-
-        field.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ("myAction".equals(e.getActionCommand())) {
-                    System.out.println(e.getActionCommand());
-                }
-            }
-        });
-
-        field.addActionListener(e -> {
-            if ("myAction".equals(e.getActionCommand())) {
-                System.out.println(e.getActionCommand());
-            }
-        });
-
-        // Custom Interface
-        Person bruceWayne = new Person("Bruce");
-        destroyBatman(new Batman() {
-            @Override
-            public Person getIdentity() {
-                return bruceWayne;
-            }
-        });
-
-        destroyBatman(() -> bruceWayne);
-
-        Avengers avengers = new Avengers(() -> bruceWayne);
-
-        // Method Reference
-        revealBatmanIdentity(avengers::getBatman);
-        findIronMan(IronMan::new);
-
+    private static void lambdaFunctionInterfaces(Avengers avengers) {
         Batman batman = avengers.getBatman();
 
         IronMan ironMan = new IronMan();
@@ -92,7 +77,7 @@ public class LambdaExample {
                     kick(avenger);
                 });
 
-        java.util.ArrayList persons = new ArrayList<Person>();
+        ArrayList persons = new ArrayList<Person>();
         persons.add(anonymous);
 
         // Predicate<T>
@@ -100,6 +85,104 @@ public class LambdaExample {
 
         // Runnable
         callBatman(() -> System.out.println("calling " + batman));
+    }
+
+    private static void lambdaMethodReference(Avengers avengers) {
+        // Method Reference
+        revealBatmanIdentity(avengers::getBatman);
+        findIronMan(IronMan::new);
+    }
+
+    private static Avengers lambdaCustomInterface() {
+        // Custom Interface
+        Person bruceWayne = new Person("Bruce");
+        destroyBatman(new Batman() {
+            @Override
+            public Person getIdentity() {
+                return bruceWayne;
+            }
+        });
+
+        destroyBatman(() -> bruceWayne);
+
+        return new Avengers(() -> bruceWayne);
+    }
+
+    private static void lambdaListener() {
+        // Listener in GUI
+        TextField field = new TextField();
+
+        field.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("myAction".equals(e.getActionCommand())) {
+                    System.out.println(e.getActionCommand());
+                }
+            }
+        });
+
+        field.addActionListener(e -> {
+            if ("myAction".equals(e.getActionCommand())) {
+                System.out.println(e.getActionCommand());
+            }
+        });
+    }
+
+    private static void defaultAndStaticInterfaceMethods() {
+        FightSkill example = null;
+        example.punch();
+
+        FightSkill.launchPunch(example);
+
+        Kungfu.launchPunch(example);
+        /*Does not work. Static method only in the scope
+        of the interface that defines it.
+        */
+        example.fightStyle();
+        KungFu kungFu = new KungFu();
+        kungFu.fightStyle(); // print: "Kung Fu"
+        kungFu.punch();      // print: "Kung Fu punch"
+
+        kungFu.spitFire();
+    }
+
+    private static void typeInference() {
+        // Java 6: declare the type
+        List<String> stringsJava6 = new ArrayList<String>();
+
+        // Java 7: Type Inference
+        List<String> stringsJava7 = new ArrayList<>();
+
+        // Java 7
+        processStringList(Collections.<String>emptyList());
+
+        // Java 7 failed, Java 8 works. Method argument infer the type of data
+        processStringList(Collections.emptyList());
+
+        doPeriodicCleanup();
+
+        stringsJava6.add("");
+        stringsJava7.add("");
+
+        System.out.printf(stringsJava6.toString());
+        System.out.printf(stringsJava7.toString());
+    }
+
+    private static void typeAnnotations() {
+        String one;
+        Object two = null;
+        two = "yeah";
+
+        // Type Annotations
+        new @Fly Integer(23);
+        one = (@Fly String) two;
+        new ArrayList<@Fly String>();
+
+        System.out.printf(one);
+    }
+
+    private static void methodParameterReflection() {
+        Person.class.getMethods()[0].getParameters();
     }
 
     private static void callBatman(Runnable call) {

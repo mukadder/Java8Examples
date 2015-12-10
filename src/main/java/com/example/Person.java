@@ -1,13 +1,12 @@
 package com.example;
 
-/**
- * Created by najor on 7/10/15.
- */
-public class Person {
+import com.example.annotations.Fly;
+
+public class Person<@Fly T> implements @Fly FightSkill{
 
     private String name;
 
-    public Person(String name) {
+    public Person(@Fly String name) {
         this.name = name;
     }
 
@@ -17,5 +16,20 @@ public class Person {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+    @Override
+    public String fightStyle() {
+        return null;
+    }
+
+    @Override
+    public String punch() {
+        return null;
+    }
+
+    @Override
+    public String spitFire() {
+        return null;
     }
 }
